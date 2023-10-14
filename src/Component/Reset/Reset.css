@@ -1,0 +1,29 @@
+.Reset_Layout_Background {
+  height: 100vh;
+  background-color: #1b1f31;
+  justify-content: center;
+  align-items: center;
+}
+
+.Reset {
+  align-items: center;
+  justify-content: center;
+  display: block;
+}
+
+.Reset_img {
+  height: 200px;
+  width: 250px;
+}
+
+.Reset_password {
+  color: white;
+  background-color: #246dc6;
+  padding: 10px 25px;
+  border: none;
+}
+
+.Go_back {
+  border-color: 1px solid #246dc6;
+  color: #246dc6;
+}

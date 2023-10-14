@@ -1,5 +1,36 @@
 .Layout_Background {
   height: 100vh;
-  width: 100vw;
   background-color: #1b1f31;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Register {
+  display: flex;
+  background-color: white;
+  width: 50%;
+  border-radius: 8px;
+  padding: 40px;
+}
+.Register_img {
+  height: 300px;
+  width: 315px;
+}
+.Register_btn {
+  background-color: #246dc6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.Register_input input {
+  border: 1px solid rgb(166, 167, 161);
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+}
+
+.Login_text {
+  color: #246dc6;
 }
