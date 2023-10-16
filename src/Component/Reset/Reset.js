@@ -12,11 +12,17 @@ const Reset = () => {
           <br />
           <div>
             <div>
-              <input type="email" />
+              <input
+                className="Reset_Input_Email"
+                type="email"
+                placeholder="admin@example.com"
+              />
             </div>
+            <br />
             <div>
               <button className="Reset_password">Reset Password</button>
             </div>
+            <br />
             <div>
               <button className="Go_back">Go back</button>
             </div>
