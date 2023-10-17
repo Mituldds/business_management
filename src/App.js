@@ -3,6 +3,7 @@ import Admin from "./Component/Admin/Admin";
 import Login from "./Component/Login/Login";
 import Register from "./Component/Register/Register";
 import Reset from "./Component/Reset/Reset";
+import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./Component/Home";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/reset" element={<Reset />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
       <ToastContainer
         position="top-center"

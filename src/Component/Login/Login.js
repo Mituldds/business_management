@@ -47,12 +47,20 @@ const Login = () => {
     }
   };
 
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
+  const handleForgotPassword = () => {
+    navigate("/reset");
+  };
+
   return (
     <>
       <div className="Login_Layout_Background">
         <div className="Login">
           <div className="Login_img_div">
-            <img className="Login_img" src="/images/SentMessageImg.svg" />
+            <img className="Login_img" src="/images/Login/SentMessageImg.svg" />
           </div>
 
           <div className="Login_form">
@@ -90,7 +98,12 @@ const Login = () => {
                   <input type="checkbox" /> <span>Remember Me</span>
                 </div>
                 <div>
-                  <span className="Register_Forgot">Forgot password?</span>
+                  <span
+                    className="Register_Forgot"
+                    onClick={handleForgotPassword}
+                  >
+                    Forgot password?
+                  </span>
                 </div>
               </div>
               <button type="submit" className="Login_btn" onClick={handleLogin}>
@@ -98,7 +111,9 @@ const Login = () => {
               </button>
               <p>
                 Don't have an Account?{" "}
-                <span className="Register_Forgot">Register</span>{" "}
+                <span className="Register_Forgot" onClick={handleRegister}>
+                  Register
+                </span>{" "}
               </p>
             </div>
           </div>

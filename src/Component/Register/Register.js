@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./Register.css";
-import { fireStore } from "../../firebaseConfig";
+import { auth, fireStore } from "../../firebaseConfig";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -67,38 +68,63 @@ const Register = () => {
     // }
 
     setErrors(newError);
-    navigate("/");
     if (formIsValid) {
       try {
-        const dataWithTimestamps = {
-          ...adminData,
-          created_at: serverTimestamp(),
-          updated_at: serverTimestamp(),
-        };
-        const addAdminData = await addDoc(
-          collection(fireStore, "AdminData"),
-          dataWithTimestamps
-        );
-        toast.success(`${adminData.username} Registration successfully`);
+        const auth = getAuth();
+        createUserWithEmailAndPassword(
+          auth,
+          adminData.email,
+          adminData.password
+        )
+          .then(async (userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            console.log(user);
+
+            const dataWithTimestamps = {
+              ...adminData,
+              username: adminData.username,
+              email: adminData.email,
+              created_at: serverTimestamp(),
+              updated_at: serverTimestamp(),
+            };
+            const addAdminData = await addDoc(
+              collection(fireStore, "AdminData"),
+              dataWithTimestamps
+            );
+            toast.success(`${adminData.username} Registration successfully`);
+            navigate("/");
+            // ...
+          })
+          .catch((error) => {
+            console.log(error.message);
+            toast.error(error.message);
+            // ..
+          });
       } catch (error) {
         console.log(error);
       }
     }
   };
 
+  const handleRegisterPageLogin = () => {
+    navigate("/");
+  };
   return (
     <>
       <form onSubmit={submitAdminData}>
         <div className="Register_Layout_Background">
           <div className="Register">
             <div className="Register_img_div">
-              <img className="Register_img" src="/images/SentMessageImg.svg" />
+              <img
+                className="Register_img"
+                src="/images/Register/SentMessageImg.svg"
+              />
             </div>
 
             <div className="Register_form">
               <div>
                 <div className="Register_input">
-                  <p>{errors?.username}</p>
                   <TextField
                     // id="outlined-basic"
                     label="Username"
@@ -110,9 +136,9 @@ const Register = () => {
                     onChange={handleOnchangeRegisterUser}
                     type="text"
                   />
+                  <span className="Register_error">{errors?.username}</span>
                   <br />
                   <br />
-                  <p>{errors?.email}</p>
                   <TextField
                     // id="outlined-basic"
                     label="Email"
@@ -124,12 +150,12 @@ const Register = () => {
                     onChange={handleOnchangeRegisterUser}
                     type="email"
                   />
+                  <span className="Register_error">{errors?.email}</span>
                   {/* <input type="email" placeholder="Email" /> <br /> */}
                   {/* <br /> */}
                   {/* <input type="password" placeholder="Password" /> <br /> */}
                   <br />
                   <br />
-                  <p>{errors?.password}</p>
                   <TextField
                     // id="outlined-basic"
                     label="Password"
@@ -141,23 +167,23 @@ const Register = () => {
                     onChange={handleOnchangeRegisterUser}
                     type="text"
                   />
+                  <span className="Register_error">{errors?.password}</span>
                 </div>
                 <div className="Register_Remember">
-                  <div>
-                    <input type="checkbox" /> <span>Remember Me</span>
-                  </div>
-                  <div>
-                    <span className="Register_Register_Forgot">
-                      Forgot password?
-                    </span>
-                  </div>
+                  <input type="checkbox" />{" "}
+                  <span>I have raed and agree to the terms of service</span>
                 </div>
                 <button type="submit" value="Register" className="Register_btn">
                   Register
                 </button>
                 <p>
                   Don't have an Account?{" "}
-                  <span className="Register_Register_Forgot">Login</span>{" "}
+                  <span
+                    className="Register_Register_Forgot"
+                    onClick={handleRegisterPageLogin}
+                  >
+                    Login
+                  </span>{" "}
                 </p>
               </div>
             </div>

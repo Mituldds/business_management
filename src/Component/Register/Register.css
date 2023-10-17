@@ -31,9 +31,7 @@
   background-color: #246dc6;
 }
 .Register_Remember {
-  display: flex;
   margin-top: 15px;
-  justify-content: space-between;
 }
 
 .Register_Register_Forgot {
@@ -44,4 +42,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.Register_error {
+  margin: 0px;
+  color: red;
 }
