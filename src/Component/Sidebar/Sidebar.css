@@ -1,0 +1,78 @@
+/* .Saidbar_layout {
+  color: white;
+  height: 100vh;
+}
+.Saidbar_menu li {
+  list-style: none;
+  display: flex;
+}
+.Saidbar {
+  width: 20%;
+  background-color: #21273c;
+}
+
+.Saidbar_Title {
+  font-size: 25px;
+  font-weight: 700;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 65%;
+}
+
+.Saidbar_Bussines_icon {
+  color: aquamarine;
+}
+
+.Saidbar_menu p {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+} */
+
+/* Sidebar.css */
+
+.sidebar {
+  width: 15%;
+  height: 100%;
+  background-color: #21273c;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  color: white;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  /* align-items: center; */
+}
+
+.sidebar i {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.sidebar li:hover {
+  /* text-decoration: underline; */
+}
+
+.sidebar_title {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 20px;
+  width: 64%;
+  margin: 0%;
+}
+
+.sidebar_icon {
+  color: aquamarine;
+}

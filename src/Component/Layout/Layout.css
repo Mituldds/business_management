@@ -1,0 +1,10 @@
+.Layout {
+  display: flex;
+}
+
+.Layout_left {
+  width: 15%;
+}
+.Layout_right {
+  width: 85%;
+}

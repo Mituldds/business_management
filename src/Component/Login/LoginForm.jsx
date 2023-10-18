@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const Login = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const [adminLoginData, setAdminLoginData] = useState({
     email: "",
@@ -147,4 +147,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
