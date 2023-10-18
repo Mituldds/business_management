@@ -1,88 +1,81 @@
 import React, { useState } from "react";
 import "./ForgotPassword.css";
+import { toast } from "react-toastify";
 import { TextField } from "@mui/material";
+import { auth } from "../../firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = () => {
-  const [adminForgotData, setAdminLoginData] = useState({
+  const navigate = useNavigate();
+  const [forgotAdminData, setFogotAdminData] = useState({
     email: "",
-    oldPwd: "",
-    newPwd: "",
-    confirmPwd: "",
+    message: "",
   });
 
-  const handleForgotOnchange = (event) => {
+  const handleForgotPasswordAdminData = (event) => {
     let name, value;
     name = event.target.name;
     value = event.target.value;
-    setAdminLoginData({ ...adminForgotData, [name]: value });
+    setFogotAdminData({ ...forgotAdminData, [name]: value });
   };
 
-  const hanldeResetPassword = () => {};
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    sendPasswordResetEmail(auth, forgotAdminData.email)
+      .then(() => {
+        // Password reset email sent!
+        toast.success("Password reset email sent successfully.");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        // ..
+      });
+  };
+  const handleGoBack = () => {
+    navigate("/");
+  };
 
   return (
     <>
-      <div className="Forgot_Layout_Background">
-        <div className="Forgot">
+      <div className="Reset_Layout_Background">
+        <div className="Reset">
           <div>
-            <img
-              className="Forgot_img"
-              src="/images/Reset/SentMessageImg.svg"
-            />
+            <img className="Reset_img" src="/images/Reset/SentMessageImg.svg" />
           </div>
           <br />
           <div>
             <div>
+              {/* <input
+                className="Reset_Input_Email"
+                type="email"
+                placeholder="admin@example.com"
+                name="email"
+                value={forgotAdminData.email}
+                onChange={handleForgotPasswordAdminData}
+              /> */}
               <TextField
                 label="Email"
                 size="small"
-                type="email"
                 fullWidth
                 name="email"
-                value={adminForgotData.email}
-                onChange={handleForgotOnchange}
-              />
-              <br />
-              <br />
-
-              <TextField
-                label="Old Password"
-                size="small"
-                fullWidth
-                name="oldPwd"
                 type="email"
-                value={adminForgotData.oldPwd}
-                onChange={handleForgotOnchange}
+                onChange={handleForgotPasswordAdminData}
+                value={forgotAdminData.email}
               />
-              <br />
-              <br />
-              <TextField
-                label="New Password"
-                size="small"
-                fullWidth
-                name="newPwd"
-                value={adminForgotData.newPwd}
-                onChange={handleForgotOnchange}
-              />
-              <br />
-              <br />
-              <TextField
-                label="Re-enter Password"
-                size="small"
-                fullWidth
-                name="confirmPwd"
-                value={adminForgotData.confirmPwd}
-                onChange={handleForgotOnchange}
-              />
-              <br />
-              <br />
             </div>
             <br />
             <div>
-              <button className="Forgot_password" onClick={hanldeResetPassword}>
-                Reset Password
+              <button className="Reset_password" onClick={handleForgotPassword}>
+                Send Email
               </button>
             </div>
             <br />
+            <div>
+              <button className="Go_back" onClick={handleGoBack}>
+                Go back
+              </button>
+            </div>
           </div>
         </div>
       </div>

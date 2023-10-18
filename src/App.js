@@ -2,11 +2,11 @@ import { ToastContainer } from "react-toastify";
 import Admin from "./Component/Admin/Admin";
 import Login from "./Component/Login/Login";
 import Register from "./Component/Register/Register";
-import Reset from "./Component/Reset/Reset";
-import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./Component/Home";
+import Reset from "./Component/Reset/Reset";
+import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 
 function App() {
   return (

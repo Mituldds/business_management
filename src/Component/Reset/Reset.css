@@ -1,4 +1,4 @@
-.Reset_Layout_Background {
+.Forgot_Layout_Background {
   height: 100vh;
   background-color: #1b1f31;
   justify-content: center;
@@ -6,39 +6,23 @@
   display: flex;
 }
 
-.Reset {
+.Forgot {
   text-align: center;
   background-color: white;
   border-radius: 8px;
   padding: 30px;
 }
 
-.Reset_img {
+.Forgot_img {
   height: 200px;
-  width: 250px;
+  width: 300px;
 }
 
-.Reset_password {
+.Forgot_password {
   color: white;
   background-color: #246dc6;
   padding: 10px;
   border: none;
   width: 100%;
   border-radius: 4px;
-}
-
-.Go_back {
-  border-radius: 4px;
-  border: 1px solid #246dc6;
-  color: #246dc6;
-  width: 100%;
-  padding: 10px;
-  background-color: white;
-}
-
-.Reset_Input_Email {
-  height: 30px;
-  width: 98%;
-  border-radius: 4px;
-  border: 1px solid #646262;
 }

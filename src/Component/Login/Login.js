@@ -5,6 +5,7 @@ import { auth, fireStore } from "../../firebaseConfig";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,31 +21,54 @@ const Login = () => {
     setAdminLoginData({ ...adminLoginData, [name]: value });
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    const { email, password } = adminLoginData;
+  // const handleLogin = async (event) => {
+  //   event.preventDefault();
+  //   const { email, password } = adminLoginData;
 
-    const usersRef = collection(fireStore, "AdminData");
-    const q = query(usersRef, where("email", "==", email));
-    const querySnapshot = await getDocs(q);
+  //   const usersRef = collection(fireStore, "AdminData");
+  //   const q = query(usersRef, where("email", "==", email));
+  //   const querySnapshot = await getDocs(q);
 
-    let foundUsers = [];
-    querySnapshot.forEach((doc) => {
-      const userData = doc.data();
-      foundUsers.push({ ...doc.data(), id: doc.id });
-    });
+  //   let foundUsers = [];
+  //   querySnapshot.forEach((doc) => {
+  //     const userData = doc.data();
+  //     foundUsers.push({ ...doc.data(), id: doc.id });
+  //   });
 
-    if (foundUsers?.length) {
-      if (foundUsers[0].password == password) {
-        toast.success("login successful");
+  //   if (foundUsers?.length) {
+  //     if (foundUsers[0].password == password) {
+  //       toast.success("login successful");
 
+  //       navigate("/home");
+  //     } else {
+  //       toast.error("password not matched");
+  //     }
+  //   } else {
+  //     toast.error("User not found & please enter your valid email ");
+  //   }
+  // };
+
+  const handleLogin = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(
+      auth,
+      adminLoginData.email,
+      adminLoginData.password
+    )
+      .then((userCredential) => {
+        // Signed in
+
+        const user = userCredential.user;
+        console.log("====================================");
+        console.log(user);
+        console.log("====================================");
+        toast.success("User signed in successfully");
         navigate("/home");
-      } else {
-        toast.error("password not matched");
-      }
-    } else {
-      toast.error("User not found & please enter your valid email ");
-    }
+        // ...
+      })
+      .catch((error) => {
+        toast.error("signin failed", error);
+      });
   };
 
   const handleRegister = () => {
@@ -52,7 +76,7 @@ const Login = () => {
   };
 
   const handleForgotPassword = () => {
-    navigate("/reset");
+    navigate("/forgotpassword");
   };
 
   return (

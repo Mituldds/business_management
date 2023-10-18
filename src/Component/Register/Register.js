@@ -21,6 +21,7 @@ const Register = () => {
     let name, value;
     name = event.target.name;
     value = event.target.value;
+
     setAdminData({
       ...adminData,
       [name]: value,
