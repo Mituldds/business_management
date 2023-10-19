@@ -1,4 +1,4 @@
-.header_profile_img {
+/* .header_profile_img {
   height: 25%;
   width: 25%;
   border-radius: 50%;
@@ -11,6 +11,18 @@
   background-color: rgb(255, 255, 255);
   width: 100%;
   height: 45px;
-  /* Example of an outset shadow */
-  box-shadow: 5px 5px 10px 0 #b1aeae; /* 5px horizontal offset, 5px vertical offset, 10px blur radius, no spread, gray color, and an outset shadow */
+  box-shadow: 5px 5px 10px 0 #b1aeae;
+} */
+
+.navbar_right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar {
+  /* display: flex;
+  justify-content: space-between; */
+  background-color: #22273b;
 }

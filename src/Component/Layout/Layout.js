@@ -1,145 +1,78 @@
-import React from "react";
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Footer from "../Footer/Footer";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
-const Layout = () => {
-  return (
-    <div className="Layout">
-      <div className="Layout_left">
-        <Sidebar />
-      </div>
+import "./Layout.css";
 
-      <div className="Layout_right">
-        <div>
-          <Header />
+const drawerWidth = 240;
+
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    // padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  })
+);
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
+}));
+
+const Layout = () => {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Header
+        handleDrawerOpen={handleDrawerOpen}
+        open={open}
+        drawerWidth={drawerWidth}
+      />
+
+      <Sidebar
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+        drawerWidth={drawerWidth}
+      />
+
+      <Main open={open}>
+        <DrawerHeader />
+        <div className="Layout_Main">
+          <div>Component</div>
         </div>
-        <div>Component</div>
-        <div>footer</div>
-      </div>
-    </div>
+        <Footer />
+      </Main>
+    </Box>
   );
 };
 
 export default Layout;
-
-// import React from "react";
-// import {
-//   AppBar,
-//   Box,
-//   Divider,
-//   Drawer,
-//   IconButton,
-//   Toolbar,
-//   Typography,
-// } from "@mui/material";
-// // import WidgetsIcon from "@mui/icons-material/Widgets";
-// // import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
-// import { Link } from "react-router-dom";
-// import { useState } from "react";
-// import "./Layout.css";
-
-// const Layout = () => {
-//   const [mobileopen, setMobileopen] = useState(false);
-
-//   const handleDrawerToggle = () => {
-//     setMobileopen(!mobileopen);
-//   };
-//   const drawer = (
-//     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-//       <Typography
-//         color={"goldenrod"}
-//         variant="h6"
-//         component="div"
-//         sx={{ flexGrow: 1, my: 2 }}
-//       >
-//         <img alt="logo" height={"70"} width="200" />
-//       </Typography>
-//       <Divider></Divider>
-//       <ul className="mobile_navigation">
-//         <li>
-//           <Link to={"/home"}>Home</Link>
-//         </li>
-//         <li>
-//           <Link to={"/menu"}>Menu</Link>
-//         </li>
-//         <li>
-//           <Link to={"/about"}>About</Link>
-//         </li>
-//         <li>
-//           <Link to={"/contact"}>Contact</Link>
-//         </li>
-//         <li>
-//           <Link to={"/"}>Login</Link>
-//         </li>
-//       </ul>
-//     </Box>
-//   );
-//   return (
-//     <>
-//       <Box>
-//         <AppBar component={"nav"} sx={{ bgcolor: "black" }}>
-//           <Toolbar>
-//             <IconButton
-//               color="inherit"
-//               aria-label="open drawer"
-//               edge="start"
-//               sx={{ mr: 2, display: { sm: "none" } }}
-//               onClick={handleDrawerToggle}
-//             >
-//               {/* <WidgetsRoundedIcon /> */}
-//             </IconButton>
-//             <Typography
-//               color={"goldenrod"}
-//               variant="h6"
-//               component="div"
-//               sx={{ flexGrow: 1 }}
-//             >
-//               <img alt="logo" height={"70"} width={250} />
-//             </Typography>
-
-//             <Box sx={{ display: { xs: "none", sm: "block" } }}>
-//               <ul className="navigation_menu">
-//                 <li>
-//                   <Link to={"/home"}>Home</Link>
-//                 </li>
-//                 <li>
-//                   <Link to={"/menu"}>Menu</Link>
-//                 </li>
-//                 <li>
-//                   <Link to={"/about"}>About</Link>
-//                 </li>
-//                 <li>
-//                   <Link to={"/contact"}>Contact</Link>
-//                 </li>
-//                 <li>
-//                   <Link to={"/"}>Login</Link>
-//                 </li>
-//               </ul>
-//             </Box>
-//           </Toolbar>
-//         </AppBar>
-//         <Box component="nav">
-//           <Drawer
-//             variant="temporary"
-//             open={mobileopen}
-//             onClose={handleDrawerToggle}
-//             sx={{
-//               display: { xs: "block", sm: "none" },
-//               "& .MuiDrawer-paper": {
-//                 boxSizing: "border-box",
-//                 width: "240px",
-//               },
-//             }}
-//           >
-//             {drawer}
-//           </Drawer>
-//         </Box>
-
-//         <Box>
-//           <Toolbar />
-//         </Box>
-//       </Box>
-//     </>
-//   );
-// };
-
-// export default Layout;

@@ -1,15 +1,12 @@
 import { ToastContainer } from "react-toastify";
 import Admin from "./Component/Admin/Admin";
-// import Login from "./Pages/Login/index.jsx";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import Home from "./Component/Home";
-import Reset from "./Component/Reset/Reset";
-import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 import Layout from "./Component/Layout/Layout";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import ForgotPwd from "./Pages/ForgotPwd";
+import Reset from "./Pages/Reset";
 
 function App() {
   return (

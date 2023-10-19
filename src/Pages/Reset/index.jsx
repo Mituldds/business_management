@@ -1,8 +1,7 @@
 import React from "react";
-import Reset from "../../Component/Reset/Reset";
-
+import ResetPwd from "../../Component/Reset/ResetPwd";
 const Reset = () => {
-  return <Reset />;
+  return <ResetPwd />;
 };
 
 export default Reset;

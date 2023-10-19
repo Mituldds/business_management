@@ -1,0 +1,25 @@
+.navbar_profile {
+  display: flex;
+  align-items: center;
+  width: 18vw;
+  margin: auto;
+  justify-content: space-evenly;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px !important;
+  background-color: burlywood;
+}
+.navbar_right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar_icon_profile {
+  display: flex;
+  color: black;
+  align-items: center;
+  justify-content: space-between;
+}

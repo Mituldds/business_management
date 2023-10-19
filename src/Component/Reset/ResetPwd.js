@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Reset.css";
+import "./ResetPwd.css";
 import { TextField } from "@mui/material";
 import { auth } from "../../firebaseConfig";
 import { getAuth, updatePassword } from "firebase/auth";
@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 // After Login
 
-const Reset = () => {
+const ResetPwd = () => {
   const [adminResetData, setAdminResetData] = useState({
     email: "",
     oldPwd: "",
@@ -108,4 +108,4 @@ const Reset = () => {
   );
 };
 
-export default Reset;
+export default ResetPwd;

@@ -8,3 +8,6 @@
 .Layout_right {
   width: 85%;
 }
+.Layout_Main {
+  min-height: calc(100vh - 128px);
+}

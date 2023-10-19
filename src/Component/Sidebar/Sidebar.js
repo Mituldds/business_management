@@ -1,83 +1,89 @@
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+
 import React from "react";
-import "./Sidebar.css";
-import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
-import CategoryIcon from "@mui/icons-material/Category";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
-const Sidebar = () => {
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
+}));
+const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
+  const theme = useTheme();
+
   return (
-    <>
-      <div className="sidebar">
-        <ul>
-          <div>
-            <p className="sidebar_title">
-              <i>
-                <SpaceDashboardIcon className="sidebar_icon" />
-              </i>{" "}
-              Dashboard
-            </p>
-          </div>
-          <br />
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: drawerWidth,
+          boxSizing: "border-box",
+          backgroundColor: "#21273C",
+          color: "#fff",
+        },
+      }}
+      variant="persistent"
+      anchor="left"
+      open={open}
+    >
+      <DrawerHeader>
+        <Typography
+          variant="small"
+          noWrap
+          component="div"
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Business Management
+        </Typography>
 
-          <li>
-            <i>
-              <StorefrontIcon className="sidebar_icon" />{" "}
-            </i>{" "}
-            Account Master
-          </li>
-          <li>
-            <i className="fas fa-info-circle">
-              <ContactMailIcon className="sidebar_icon" />
-            </i>{" "}
-            Item Master
-          </li>
-          <li>
-            <i className="fas fa-cogs">
-              <CategoryIcon className="sidebar_icon" />
-            </i>{" "}
-            Services
-          </li>
-          <li>
-            <i className="fas fa-envelope">
-              <StorefrontIcon className="sidebar_icon" />
-            </i>{" "}
-            Contact Us
-          </li>
-        </ul>
-      </div>
-    </>
+        <IconButton onClick={handleDrawerClose} style={{ color: "white" }}>
+          {theme.direction === "ltr" ? (
+            <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
+          )}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      <List>
+        {["Account Master", "Item Master", "Send email", "Drafts"].map(
+          (text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon style={{ color: "white" }}>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
+      </List>
+    </Drawer>
   );
 };
 
 export default Sidebar;
-
-// Sidebar.js
-
-// Sidebar.js
-// import React from "react";
-// import "./Sidebar.css";
-
-// const Sidebar = () => {
-//   return (
-//     <div className="sidebar">
-//       <ul>
-//         <li>
-//           <i><StorefrontIcon /> </i> Home
-//         </li>
-//         <li>
-//           <i className="fas fa-info-circle"></i> About
-//         </li>
-//         <li>
-//           <i className="fas fa-cogs"></i> Services
-//         </li>
-//         <li>
-//           <i className="fas fa-envelope"></i> Contact
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
