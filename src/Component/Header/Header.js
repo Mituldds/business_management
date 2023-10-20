@@ -41,7 +41,7 @@ const Header = ({ drawerWidth, open, handleDrawerOpen }) => {
           edge="start"
           sx={{ mr: 2, ...(open && { display: "none" }) }}
         >
-          <MenuIcon />
+          <MenuIcon style={{ color: "#F9EBD8" }} />
         </IconButton>
 
         <div

@@ -1,4 +1,6 @@
+import React from "react";
 import {
+  Collapse,
   Divider,
   Drawer,
   IconButton,
@@ -14,9 +16,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-
-import React from "react";
-
+import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -26,7 +27,18 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
+  const navigate = useNavigate();
   const theme = useTheme();
+
+  const [openDropDown, setOpenDropDown] = React.useState(false);
+
+  const handleClick = () => {
+    setOpenDropDown(!openDropDown);
+  };
+
+  const handleCustomer = () => {
+    navigate("/admin/customer");
+  };
 
   return (
     <Drawer
@@ -69,7 +81,7 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {["Account Master", "Item Master", "Send email", "Drafts"].map(
+        {/* {["Account Master", "Customer", "party", "Labour", "Item Master"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
@@ -80,7 +92,33 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
               </ListItemButton>
             </ListItem>
           )
+        )} */}
+
+        <ListItem onClick={handleClick}>
+          <ListItemText primary="Account Master" />
+          {openDropDown ? <MailIcon /> : <InboxIcon />}
+        </ListItem>
+        {openDropDown && (
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem className="sub-menu-item" onClick={handleCustomer}>
+                <ListItemText primary="Customer" />
+              </ListItem>
+              <ListItem className="sub-menu-item">
+                <ListItemText primary="party" />
+              </ListItem>
+              <ListItem className="sub-menu-item">
+                <ListItemText primary="Labour" />
+              </ListItem>
+            </List>
+          </Collapse>
         )}
+        <List>
+          <ListItem>
+            <ListItemText>Item Master</ListItemText>
+            {<MailIcon />}
+          </ListItem>
+        </List>
       </List>
     </Drawer>
   );

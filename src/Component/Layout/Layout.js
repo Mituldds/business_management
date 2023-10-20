@@ -5,7 +5,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Footer from "../Footer/Footer";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
+import Admin from "../Admin/Admin";
+import { Route, Routes } from "react-router-dom";
 import "./Layout.css";
+import Customer from "../Customer/Customer";
+import Party from "../Party/Party";
+import Labour from "../Labour/Labour";
 
 const drawerWidth = 240;
 
@@ -37,7 +42,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -67,7 +72,14 @@ const Layout = () => {
       <Main open={open}>
         <DrawerHeader />
         <div className="Layout_Main">
-          <div>Component</div>
+          {/* {children} */}
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/customer" element={<Customer />} />
+            <Route path="/party" element={<Party />} />
+            <Route path="/labour" element={<Labour />} />
+          </Routes>
+          <div>{/* <CustomerLogin /> */}</div>
         </div>
         <Footer />
       </Main>

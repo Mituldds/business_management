@@ -16,8 +16,17 @@ function App() {
         <Route path="/register" element={<Signup />} />
         <Route path="/forgotPassword" element={<ForgotPwd />} />
         <Route path="/reset" element={<Reset />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/layout" element={<Layout />} />
+        <Route path="/admin/*" element={<Layout />} />
+        {/* <Route
+          path="/admin"
+          element={
+            <Layout>
+              <Admin />
+            </Layout>
+          }
+        /> */}
+
+        {/* <Route path="/layout/*" element={<Layout />} /> */}
         {/* <Route path="/home" element={<Home />} /> */}
       </Routes>
 
