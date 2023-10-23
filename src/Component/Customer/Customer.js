@@ -13,6 +13,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from "firebase/firestore";
 import { fireStore } from "../../firebaseConfig";
 import AddCustomer from "./AddCustomer/AddCustomer";
@@ -54,9 +55,7 @@ const Customer = () => {
 
   const handleDeleteCustomer = async (id) => {
     try {
-      // Assuming you have a document ID, delete it from the database
       await deleteDoc(doc(fireStore, "Users", id));
-      // After deletion, refresh the data
       getCustomerData();
     } catch (error) {
       console.error("Error deleting document: ", error);

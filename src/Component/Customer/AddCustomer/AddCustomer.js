@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import "./AddCustomer.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { toast } from "react-toastify";
 import {
@@ -46,6 +52,18 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
       console.log(error.message);
       toast.error(error.message);
     }
+
+    const handleSave = async () => {
+      try {
+        const customerRef = doc(fireStore, "Users", customerData.id);
+        await updateDoc(customerRef, customerData);
+        handleClose();
+        setCustomerData({});
+      } catch (error) {
+        console.error("Error updating document: ", error);
+      }
+    };
+    console.log(customerData, "==========");
   };
   return (
     <>
@@ -156,7 +174,7 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                   color="primary"
                   fullWidth
                   type="submit"
-                  onClick={SubmitCustomerData}
+                  // onClick={customerData.id ? handleSave : SubmitCustomerData}
                 >
                   Submit
                 </Button>
