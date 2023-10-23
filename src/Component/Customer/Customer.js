@@ -6,7 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { fireStore } from "../../firebaseConfig";
 import AddCustomer from "./AddCustomer/AddCustomer";
 import "./Customer.css";
@@ -14,13 +21,22 @@ import "./Customer.css";
 const Customer = () => {
   const [open, setOpen] = useState(false);
   const [customerEntry, setCustomerEntry] = useState();
+  const [customerData, setCustomerData] = useState({});
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setCustomerData({});
+  };
 
   const getCustomerData = async () => {
     const customerData = collection(fireStore, "Users");
-    const querySnapshot = await getDocs(customerData);
+    const q = query(
+      customerData,
+
+      orderBy("AccountCode", "desc") // Sort by the 'time' field in descending order
+    );
+    const querySnapshot = await getDocs(q);
     const data = querySnapshot.docs.map((doc) => {
       return {
         id: doc.id,
@@ -31,6 +47,21 @@ const Customer = () => {
     console.log(data);
   };
 
+  const hanldeEditCustomerEntry = (rowData) => {
+    setCustomerData(rowData);
+    handleOpen();
+  };
+
+  const handleDeleteCustomer = async (id) => {
+    try {
+      // Assuming you have a document ID, delete it from the database
+      await deleteDoc(doc(fireStore, "Users", id));
+      // After deletion, refresh the data
+      getCustomerData();
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
   useEffect(() => {
     getCustomerData();
   }, [open]);
@@ -93,12 +124,18 @@ const Customer = () => {
                           variant="contained"
                           color="primary"
                           size="small"
+                          onClick={() => hanldeEditCustomerEntry(rowData)}
                         >
                           Edit
                         </Button>
                       </div>
                       <div>
-                        <Button variant="contained" color="error" size="small">
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          onClick={() => handleDeleteCustomer(rowData.id)}
+                        >
                           Delete
                         </Button>
                       </div>
@@ -109,7 +146,12 @@ const Customer = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <AddCustomer open={open} handleClose={handleClose} />
+        <AddCustomer
+          open={open}
+          handleClose={handleClose}
+          customerData={customerData}
+          setCustomerData={setCustomerData}
+        />
       </div>
     </>
   );

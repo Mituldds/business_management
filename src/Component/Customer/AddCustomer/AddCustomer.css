@@ -1,0 +1,24 @@
+.Customer_Model {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  box-shadow: 24px;
+  padding: 4px;
+}
+
+.Name_AcCode {
+  display: flex;
+  gap: 20px;
+}
+
+.email_number {
+  display: flex;
+  gap: 20px;
+}
+
+.Date_role {
+  display: flex;
+  gap: 20px;
+}

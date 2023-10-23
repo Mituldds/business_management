@@ -7,7 +7,6 @@ import { fireStore } from "../../../firebaseConfig";
 import { toast } from "react-toastify";
 import {
   Paper,
-  Typography,
   Button,
   TextField,
   Container,
@@ -16,15 +15,8 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
-const AddCustomer = ({ open, handleClose }) => {
-  const [customerData, setCustomerData] = useState({
-    customerName: "",
-    AccountCode: "",
-    Email: "",
-    MobileNumber: "",
-    Date: "",
-    Role: "",
-  });
+
+const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
   const handleCustomerData = (event) => {
     let name, value;
     name = event.target.name;
@@ -44,6 +36,7 @@ const AddCustomer = ({ open, handleClose }) => {
         collection(fireStore, "Users"),
         dataWithTime
       );
+      setCustomerData({});
       console.log(dataWithTime, "====");
       toast.success(
         `${customerData.customerName} Account Details added successfully`
@@ -73,9 +66,6 @@ const AddCustomer = ({ open, handleClose }) => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h5" component="h2" gutterBottom>
-                Add Customer
-              </Typography>
               <form>
                 <div className="Name_AcCode">
                   <TextField
