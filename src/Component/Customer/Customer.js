@@ -13,6 +13,7 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { fireStore } from "../../firebaseConfig";
 import AddCustomer from "./AddCustomer/AddCustomer";
@@ -35,7 +36,9 @@ const Customer = () => {
     const q = query(
       customerData,
 
-      orderBy("AccountCode", "desc") // Sort by the 'time' field in descending order
+      where("Role", "==", "Customer")
+
+      // orderBy("AccountCode", "desc") // Sort by the 'time' field in descending order
     );
     const querySnapshot = await getDocs(q);
     const data = querySnapshot.docs.map((doc) => {
@@ -104,7 +107,7 @@ const Customer = () => {
                 <TableRow key={index}>
                   <TableCell>{rowData.Role || "Nan"}</TableCell>
                   <TableCell>{rowData.AccountCode || "Nan"}</TableCell>
-                  <TableCell>{rowData.customerName || "Nan"}</TableCell>
+                  <TableCell>{rowData.Name || "Nan"}</TableCell>
                   <TableCell>{rowData.Email || "Nan"}</TableCell>
                   <TableCell>{rowData.MobileNumber || "Nan"}</TableCell>
                   <TableCell>
@@ -150,8 +153,8 @@ const Customer = () => {
         <AddCustomer
           open={open}
           handleClose={handleClose}
-          customerData={customerData}
-          setCustomerData={setCustomerData}
+          Data={customerData}
+          setData={setCustomerData}
         />
       </div>
     </>

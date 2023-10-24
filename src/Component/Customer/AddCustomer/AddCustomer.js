@@ -22,53 +22,58 @@ import {
   FormControl,
 } from "@mui/material";
 
-const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
-  const handleCustomerData = (event) => {
+const AddCustomer = ({ open, handleClose, setData, Data }) => {
+  const handleData = (event) => {
     let name, value;
     name = event.target.name;
     value = event.target.value;
-    setCustomerData({ ...customerData, [name]: value });
+    setData({ ...Data, [name]: value });
   };
 
-  const SubmitCustomerData = async (e) => {
+  const SubmitData = async (e) => {
     e.preventDefault();
     try {
-      const dataWithTime = {
-        ...customerData,
-        created_at: serverTimestamp(),
-        updated_at: serverTimestamp(),
-      };
-      const addCustomer = await addDoc(
-        collection(fireStore, "Users"),
-        dataWithTime
-      );
-      // console.log(dataWithTime, "====");
-      setCustomerData({});
-      toast.success(
-        `${customerData.customerName} Account Details added successfully`
-      );
-      handleClose();
+      if (Data.Name == "" || Data.AccountCode == "") {
+        toast.error("Please fulfill all requirements");
+      } else {
+        const dataWithTime = {
+          ...Data,
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
+        const addCustomer = await addDoc(
+          collection(fireStore, "Users"),
+          dataWithTime
+        );
+        // console.log(dataWithTime, "====");
+        setData({});
+        toast.success(`${Data?.Name} Account Details added successfully`);
+        handleClose();
+      }
     } catch (error) {
       console.log(error.message);
       toast.error(error.message);
     }
   };
 
-  const handleSave = async (e) => {
-    console.log(customerData);
+  const handleEdit = async (e) => {
+    // console.log(Data);
+
     e.preventDefault();
     try {
-      let { _id, ...updatedData } = customerData;
-      const customerRef = doc(fireStore, "Users", customerData._id);
+      let { _id, ...updatedData } = Data;
+      const customerRef = doc(fireStore, "Users", Data._id);
 
       await updateDoc(customerRef, { ...updatedData });
 
       handleClose();
-      setCustomerData({});
+      setData({});
     } catch (error) {
       console.error("Error updating document: ", error.message);
     }
   };
+
+  // console.log(Data);
 
   return (
     <>
@@ -98,10 +103,11 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                     fullWidth
                     required
                     size="small"
-                    name="customerName"
-                    value={customerData.customerName}
-                    onChange={handleCustomerData}
+                    name="Name"
+                    value={Data?.Name}
+                    onChange={handleData}
                   />
+
                   <TextField
                     label="Account Code"
                     variant="outlined"
@@ -110,8 +116,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                     required
                     size="small"
                     name="AccountCode"
-                    value={customerData.AccountCode}
-                    onChange={handleCustomerData}
+                    value={Data?.AccountCode}
+                    onChange={handleData}
                   />
                 </div>
                 <div className="email_number">
@@ -123,8 +129,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                     required
                     size="small"
                     name="Email"
-                    value={customerData.Email}
-                    onChange={handleCustomerData}
+                    value={Data?.Email}
+                    onChange={handleData}
                   />
                   <TextField
                     label="Mobile Number"
@@ -134,8 +140,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                     required
                     size="small"
                     name="MobileNumber"
-                    value={customerData.MobileNumber}
-                    onChange={handleCustomerData}
+                    value={Data?.MobileNumber}
+                    onChange={handleData}
                   />
                 </div>
                 <div className="Date_role">
@@ -146,8 +152,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                     margin="normal"
                     size="small"
                     name="Date"
-                    value={customerData.Date}
-                    onChange={handleCustomerData}
+                    value={Data?.Date}
+                    onChange={handleData}
                     fullWidth
                   />
 
@@ -164,8 +170,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                       id="role"
                       label="Role"
                       name="Role"
-                      value={customerData.Role}
-                      onChange={handleCustomerData}
+                      value={Data?.Role}
+                      onChange={handleData}
                     >
                       <MenuItem value="Customer">Customer</MenuItem>
                       <MenuItem value="Party">Party</MenuItem>
@@ -179,9 +185,9 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                   color="primary"
                   fullWidth
                   type="submit"
-                  onClick={customerData._id ? handleSave : SubmitCustomerData}
+                  onClick={Data?._id ? handleEdit : SubmitData}
                 >
-                  {customerData._id ? "Edits" : "Submit"}
+                  {Data?._id ? "Edit" : "Submit"}
                 </Button>
               </form>
             </Paper>
