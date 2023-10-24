@@ -40,6 +40,13 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
     navigate("/admin/customer");
   };
 
+  const handleParty = () => {
+    navigate("/admin/party");
+  };
+
+  const handleLabour = () => {
+    navigate("/admin/Labour");
+  };
   return (
     <Drawer
       sx={{
@@ -104,10 +111,10 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
               <ListItem className="sub-menu-item" onClick={handleCustomer}>
                 <ListItemText primary="Customer" />
               </ListItem>
-              <ListItem className="sub-menu-item">
+              <ListItem className="sub-menu-item" onClick={handleParty}>
                 <ListItemText primary="party" />
               </ListItem>
-              <ListItem className="sub-menu-item">
+              <ListItem className="sub-menu-item" onClick={handleLabour}>
                 <ListItemText primary="Labour" />
               </ListItem>
             </List>

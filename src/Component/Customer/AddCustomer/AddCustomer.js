@@ -42,8 +42,8 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
         collection(fireStore, "Users"),
         dataWithTime
       );
+      // console.log(dataWithTime, "====");
       setCustomerData({});
-      console.log(dataWithTime, "====");
       toast.success(
         `${customerData.customerName} Account Details added successfully`
       );
@@ -52,19 +52,24 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
       console.log(error.message);
       toast.error(error.message);
     }
-
-    const handleSave = async () => {
-      try {
-        const customerRef = doc(fireStore, "Users", customerData.id);
-        await updateDoc(customerRef, customerData);
-        handleClose();
-        setCustomerData({});
-      } catch (error) {
-        console.error("Error updating document: ", error);
-      }
-    };
-    console.log(customerData, "==========");
   };
+
+  const handleSave = async (e) => {
+    console.log(customerData);
+    e.preventDefault();
+    try {
+      let { _id, ...updatedData } = customerData;
+      const customerRef = doc(fireStore, "Users", customerData._id);
+
+      await updateDoc(customerRef, { ...updatedData });
+
+      handleClose();
+      setCustomerData({});
+    } catch (error) {
+      console.error("Error updating document: ", error.message);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -174,9 +179,9 @@ const AddCustomer = ({ open, handleClose, setCustomerData, customerData }) => {
                   color="primary"
                   fullWidth
                   type="submit"
-                  // onClick={customerData.id ? handleSave : SubmitCustomerData}
+                  onClick={customerData._id ? handleSave : SubmitCustomerData}
                 >
-                  Submit
+                  {customerData._id ? "Edits" : "Submit"}
                 </Button>
               </form>
             </Paper>

@@ -13,7 +13,6 @@ import {
   getDocs,
   orderBy,
   query,
-  updateDoc,
 } from "firebase/firestore";
 import { fireStore } from "../../firebaseConfig";
 import AddCustomer from "./AddCustomer/AddCustomer";
@@ -25,6 +24,7 @@ const Customer = () => {
   const [customerData, setCustomerData] = useState({});
 
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
     setOpen(false);
     setCustomerData({});
@@ -40,7 +40,7 @@ const Customer = () => {
     const querySnapshot = await getDocs(q);
     const data = querySnapshot.docs.map((doc) => {
       return {
-        id: doc.id,
+        _id: doc.id,
         ...doc.data(),
       };
     });
@@ -61,6 +61,7 @@ const Customer = () => {
       console.error("Error deleting document: ", error);
     }
   };
+
   useEffect(() => {
     getCustomerData();
   }, [open]);
@@ -133,7 +134,7 @@ const Customer = () => {
                           variant="contained"
                           color="error"
                           size="small"
-                          onClick={() => handleDeleteCustomer(rowData.id)}
+                          onClick={() => handleDeleteCustomer(rowData._id)}
                         >
                           Delete
                         </Button>
@@ -145,6 +146,7 @@ const Customer = () => {
             </TableBody>
           </Table>
         </TableContainer>
+
         <AddCustomer
           open={open}
           handleClose={handleClose}
