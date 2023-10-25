@@ -11,7 +11,6 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -22,13 +21,15 @@ import "./Customer.css";
 const Customer = () => {
   const [open, setOpen] = useState(false);
   const [customerEntry, setCustomerEntry] = useState();
-  const [customerData, setCustomerData] = useState({});
+  const [customerData, setCustomerData] = useState({
+    Role: "Customer",
+  });
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
     setOpen(false);
-    setCustomerData({});
+    setCustomerData({ Role: "Customer" });
   };
 
   const getCustomerData = async () => {
@@ -87,7 +88,7 @@ const Customer = () => {
       </div>
       <br />
 
-      <div className="customer_table">
+      <div className="customer  _table">
         <TableContainer component={Paper} className="customer_table">
           <Table>
             <TableHead>

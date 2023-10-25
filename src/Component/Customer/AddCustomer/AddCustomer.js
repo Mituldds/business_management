@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddCustomer.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -30,10 +30,18 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
     setData({ ...Data, [name]: value });
   };
 
+  console.log(Data, "===========================");
   const SubmitData = async (e) => {
     e.preventDefault();
     try {
-      if (Data.Name == "" || Data.AccountCode == "") {
+      if (
+        !Data.Name ||
+        !Data.AccountCode ||
+        !Data.Email ||
+        !Data.MobileNumber ||
+        !Data.Date ||
+        !Data.Role
+      ) {
         toast.error("Please fulfill all requirements");
       } else {
         const dataWithTime = {
@@ -45,8 +53,7 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
           collection(fireStore, "Users"),
           dataWithTime
         );
-        // console.log(dataWithTime, "====");
-        setData({});
+        // setData({});
         toast.success(`${Data?.Name} Account Details added successfully`);
         handleClose();
       }
@@ -57,8 +64,6 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
   };
 
   const handleEdit = async (e) => {
-    // console.log(Data);
-
     e.preventDefault();
     try {
       let { _id, ...updatedData } = Data;
@@ -115,6 +120,7 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
                     fullWidth
                     required
                     size="small"
+                    type="number"
                     name="AccountCode"
                     value={Data?.AccountCode}
                     onChange={handleData}
@@ -136,9 +142,11 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
                     label="Mobile Number"
                     variant="outlined"
                     margin="normal"
-                    fullWidth
-                    required
+                    type="tel"
+                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                     size="small"
+                    required
+                    fullWidth
                     name="MobileNumber"
                     value={Data?.MobileNumber}
                     onChange={handleData}
@@ -172,6 +180,7 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
                       name="Role"
                       value={Data?.Role}
                       onChange={handleData}
+                      readOnly
                     >
                       <MenuItem value="Customer">Customer</MenuItem>
                       <MenuItem value="Party">Party</MenuItem>

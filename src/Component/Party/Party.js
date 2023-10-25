@@ -10,9 +10,9 @@ import AddCustomer from "../Customer/AddCustomer/AddCustomer";
 import "./Party.css";
 import {
   collection,
-  getDoc,
+  deleteDoc,
+  doc,
   getDocs,
-  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -21,14 +21,17 @@ import { fireStore } from "../../firebaseConfig";
 const Party = () => {
   const [openPartyModel, setOpenPartyModel] = useState(false);
   const [partyEntry, setPartyEntry] = useState();
-
-  const [partyData, setPartyData] = useState({});
+  const [partyData, setPartyData] = useState({
+    Role: "Party",
+  });
 
   const handleOpen = () => setOpenPartyModel(true);
 
   const handleClose = () => {
     setOpenPartyModel(false);
-    setPartyData({});
+    setPartyData({
+      Role: "Party",
+    });
   };
 
   const getPartyData = async () => {
@@ -52,16 +55,23 @@ const Party = () => {
   const AddPartyData = () => {
     handleOpen(true);
   };
+
   const hanldeEditPartyEntry = (rowData) => {
     setPartyData(rowData);
     handleOpen();
   };
-  const handleDeleteParty = () => {};
+  const handleDeleteParty = async (id) => {
+    try {
+      await deleteDoc(doc(fireStore, "Users", id));
+      getPartyData();
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
 
   useEffect(() => {
     getPartyData(openPartyModel);
   }, [openPartyModel]);
-  // console.log(partyData);
   return (
     <>
       <div className="Party">
