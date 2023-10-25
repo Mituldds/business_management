@@ -88,8 +88,12 @@ const Customer = () => {
       </div>
       <br />
 
-      <div className="customer  _table">
-        <TableContainer component={Paper} className="customer_table">
+      <div className="customer_table">
+        <TableContainer
+          component={Paper}
+          className="customer_table"
+          sx={{ boxShadow: 6 }}
+        >
           <Table>
             <TableHead>
               <TableRow>
