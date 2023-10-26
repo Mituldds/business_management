@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./AddCustomer.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+
 import {
   addDoc,
   collection,
@@ -21,6 +22,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const AddCustomer = ({ open, handleClose, setData, Data }) => {
   const handleData = (event) => {
@@ -164,13 +166,26 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
                     onChange={handleData}
                     fullWidth
                   />
+                  {/* <DatePicker
+                    label="Date"
+                    variant="outlined"
+                    margin="normal"
+                    name="Date"
+                    value={Data?.Date}
+                    onChange={handleData}
+                    slotProps={{
+                      textField: { size: "small" },
+                    }}
+                    sx={{ width: "100%" }}
+                    fullWidth
+                  /> */}
 
                   <FormControl
                     variant="outlined"
                     type="text"
                     margin="normal"
-                    fullWidth
                     size="small"
+                    fullWidth
                   >
                     <InputLabel id="role-label">Role</InputLabel>
                     <Select

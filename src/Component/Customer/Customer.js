@@ -92,7 +92,7 @@ const Customer = () => {
         <TableContainer
           component={Paper}
           className="customer_table"
-          sx={{ boxShadow: 6 }}
+          sx={{ boxShadow: 8 }}
         >
           <Table>
             <TableHead>

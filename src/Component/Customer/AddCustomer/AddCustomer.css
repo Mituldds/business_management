@@ -21,4 +21,19 @@
 .Date_role {
   display: flex;
   gap: 20px;
+  align-items: center;
+}
+
+.smallDatePicker {
+  width: 50%;
+  height: 10%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }

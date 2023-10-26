@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Collapse,
   Divider,
@@ -6,8 +6,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
   Typography,
 } from "@mui/material";
@@ -30,10 +28,15 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  const [openDropDown, setOpenDropDown] = React.useState(false);
+  const [openAccMasterDropDown, setOpenAccMasterDropDown] = useState(false);
+  const [openItemMaster, setOpenItemMaster] = useState(false);
 
-  const handleClick = () => {
-    setOpenDropDown(!openDropDown);
+  const handleAccountMaster = () => {
+    setOpenAccMasterDropDown(!openAccMasterDropDown);
+  };
+
+  const handleItemMaster = () => {
+    setOpenItemMaster(!openItemMaster);
   };
 
   const handleCustomer = () => {
@@ -101,11 +104,12 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
           )
         )} */}
 
-        <ListItem onClick={handleClick}>
+        <ListItem onClick={handleAccountMaster}>
           <ListItemText primary="Account Master" />
-          {openDropDown ? <MailIcon /> : <InboxIcon />}
+          {openAccMasterDropDown ? <MailIcon /> : <InboxIcon />}
         </ListItem>
-        {openDropDown && (
+
+        {openAccMasterDropDown && (
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem className="sub-menu-item" onClick={handleCustomer}>
@@ -120,12 +124,33 @@ const Sidebar = ({ handleDrawerClose, open, drawerWidth }) => {
             </List>
           </Collapse>
         )}
-        <List>
+
+        <ListItem onClick={handleItemMaster}>
+          <ListItemText primary="Item Master" />
+          {openItemMaster ? <MailIcon /> : <InboxIcon />}
+        </ListItem>
+        {openItemMaster && (
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem className="sub-menu-item" onClick={handleCustomer}>
+                <ListItemText primary="Customer" />
+              </ListItem>
+              <ListItem className="sub-menu-item" onClick={handleParty}>
+                <ListItemText primary="party" />
+              </ListItem>
+              <ListItem className="sub-menu-item" onClick={handleLabour}>
+                <ListItemText primary="Labour" />
+              </ListItem>
+            </List>
+          </Collapse>
+        )}
+
+        {/* <List>
           <ListItem>
             <ListItemText>Item Master</ListItemText>
             {<MailIcon />}
           </ListItem>
-        </List>
+        </List> */}
       </List>
     </Drawer>
   );
