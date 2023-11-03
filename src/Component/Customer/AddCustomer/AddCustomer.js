@@ -32,7 +32,6 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
     setData({ ...Data, [name]: value });
   };
 
-  console.log(Data, "===========================");
   const SubmitData = async (e) => {
     e.preventDefault();
     try {
@@ -79,8 +78,6 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
       console.error("Error updating document: ", error.message);
     }
   };
-
-  // console.log(Data);
 
   return (
     <>
@@ -208,6 +205,7 @@ const AddCustomer = ({ open, handleClose, setData, Data }) => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  size="small"
                   type="submit"
                   onClick={Data?._id ? handleEdit : SubmitData}
                 >

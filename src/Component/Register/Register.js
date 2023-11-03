@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, TextField } from "@mui/material";
 import "./Register.css";
 import { auth, fireStore } from "../../firebaseConfig";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
@@ -14,7 +14,11 @@ const Register = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const handleOnchangeRegisterUser = async (event) => {
     event.preventDefault();
@@ -26,13 +30,15 @@ const Register = () => {
       ...adminData,
       [name]: value,
     });
-    // console.log(adminData);
   };
 
-  const submitAdminData = async (e) => {
-    e.preventDefault();
-    const newError = {};
+  const validation = () => {
     let formIsValid = true;
+    const newError = {
+      username: "",
+      email: "",
+      password: "",
+    };
 
     if (!adminData.username) {
       formIsValid = false;
@@ -53,23 +59,24 @@ const Register = () => {
         newError.email = "*Please enter valid email-ID.";
       }
     }
-    // toast.success(`${adminData.username} your registration successful`);
-
     // if (!adminData.password) {
-    //   formIsValid = false;
     //   newError.password = "*Please enter your password.";
     // } else {
     //   const passwordPattern =
     //     /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/;
 
     //   if (!passwordPattern.test(adminData.password)) {
-    //     formIsValid = false;
     //     newError.password = "*Please enter secure and strong password.";
     //   }
     // }
 
     setErrors(newError);
-    if (formIsValid) {
+    return formIsValid;
+  };
+
+  const submitAdminData = async (e) => {
+    e.preventDefault();
+    if (validation()) {
       try {
         const auth = getAuth();
         createUserWithEmailAndPassword(
@@ -78,9 +85,7 @@ const Register = () => {
           adminData.password
         )
           .then(async (userCredential) => {
-            // Signed up
             const user = userCredential.user;
-            console.log(user);
 
             const dataWithTimestamps = {
               ...adminData,
@@ -95,22 +100,23 @@ const Register = () => {
             );
             toast.success(`${adminData.username} Registration successfully`);
             navigate("/");
-            // ...
           })
           .catch((error) => {
             console.log(error.message);
             toast.error(error.message);
-            // ..
           });
       } catch (error) {
         console.log(error);
       }
+    } else {
+      toast.error("Please Fullfill all fields");
     }
   };
 
   const handleRegisterPageLogin = () => {
     navigate("/");
   };
+
   return (
     <>
       <form onSubmit={submitAdminData}>
@@ -127,56 +133,56 @@ const Register = () => {
               <div>
                 <div className="Register_input">
                   <TextField
-                    // id="outlined-basic"
+                    sx={{ marginBottom: 2 }}
                     label="Username"
-                    // variant="outlined"
+                    variant="filled"
                     size="small"
                     fullWidth
                     value={adminData.username}
                     name="username"
                     onChange={handleOnchangeRegisterUser}
                     type="text"
+                    error={Boolean(errors?.username)}
+                    helperText={errors?.username}
                   />
-                  <span className="Register_error">{errors?.username}</span>
-                  <br />
-                  <br />
                   <TextField
-                    // id="outlined-basic"
+                    sx={{ marginBottom: 2 }}
                     label="Email"
-                    // variant="outlined"
+                    variant="filled"
                     size="small"
                     fullWidth
                     value={adminData.email}
                     name="email"
                     onChange={handleOnchangeRegisterUser}
                     type="email"
+                    error={Boolean(errors?.email)}
+                    helperText={errors?.email}
                   />
-                  <span className="Register_error">{errors?.email}</span>
-                  {/* <input type="email" placeholder="Email" /> <br /> */}
-                  {/* <br /> */}
-                  {/* <input type="password" placeholder="Password" /> <br /> */}
-                  <br />
-                  <br />
+
                   <TextField
-                    // id="outlined-basic"
+                    name="password"
                     label="Password"
-                    // variant="outlined"
+                    type="password"
+                    variant="filled"
                     size="small"
                     fullWidth
                     value={adminData.password}
-                    name="password"
                     onChange={handleOnchangeRegisterUser}
-                    type="text"
+                    error={Boolean(errors?.password)}
+                    helperText={errors?.password}
                   />
-                  <span className="Register_error">{errors?.password}</span>
                 </div>
                 <div className="Register_Remember">
                   <input type="checkbox" />{" "}
                   <span>I have raed and agree to the terms of service</span>
                 </div>
-                <button type="submit" value="Register" className="Register_btn">
-                  Register
-                </button>
+                <Button
+                  sx={{ marginTop: "10px" }}
+                  variant="contained"
+                  onClick={submitAdminData}
+                >
+                  Register{" "}
+                </Button>
                 <p>
                   Don't have an Account?{" "}
                   <span

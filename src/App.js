@@ -1,5 +1,4 @@
 import { ToastContainer } from "react-toastify";
-import Admin from "./Component/Admin/Admin";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./Component/Layout/Layout";
@@ -15,22 +14,11 @@ function App() {
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/forgotPassword" element={<ForgotPwd />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/admin/*" element={<Layout />} />
-          {/* <Route
-          path="/admin"
-          element={
-            <Layout>
-              <Admin />
-            </Layout>
-          }
-        /> */}
-
-          {/* <Route path="/layout/*" element={<Layout />} /> */}
-          {/* <Route path="/home" element={<Home />} /> */}
         </Routes>
 
         <ToastContainer

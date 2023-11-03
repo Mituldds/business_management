@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { auth, fireStore } from "../../firebaseConfig";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [adminLoginData, setAdminLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
@@ -48,27 +59,50 @@ const LoginForm = () => {
   //   }
   // };
 
-  const handleLogin = () => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(
-      auth,
-      adminLoginData.email,
-      adminLoginData.password
-    )
-      .then((userCredential) => {
-        // Signed in
+  const validate = () => {
+    let formIsValid = true;
+    const newError = {
+      email: "",
+      password: "",
+    };
 
-        const user = userCredential.user;
-        console.log("====================================");
-        console.log(user);
-        console.log("====================================");
+    if (!adminLoginData.email) {
+      formIsValid = false;
+      newError.email = "*Please enter your Email.";
+    }
+
+    if (!adminLoginData.password) {
+      formIsValid = false;
+      newError.password = "*Please enter your Password.";
+    }
+    setErrors(newError);
+    return formIsValid;
+  };
+
+  const handleLogin = () => {
+    if (validate()) {
+      try {
+        const auth = getAuth();
+        signInWithEmailAndPassword(
+          auth,
+          adminLoginData.email,
+          adminLoginData.password
+        )
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            toast.success("User signed in successfully");
+            navigate("/admin/customer");
+          })
+          .catch((error) => {
+            toast.error("signin failed", error);
+          });
+      } catch (error) {
         toast.success("User signed in successfully");
-        navigate("/home");
-        // ...
-      })
-      .catch((error) => {
-        toast.error("signin failed", error);
-      });
+      }
+    } else {
+      console.log(errors, "=================");
+    }
   };
 
   const handleRegister = () => {
@@ -86,53 +120,56 @@ const LoginForm = () => {
           <div className="Login_img_div">
             <img className="Login_img" src="/images/Login/SentMessageImg.svg" />
           </div>
-
           <div className="Login_form">
             <div>
               <div className="Login_input">
                 <TextField
+                  sx={{ my: 3 }}
+                  variant="filled"
                   label="Email"
                   size="small"
                   fullWidth
                   name="email"
                   onChange={handleOnchangeLogin}
                   value={adminLoginData.email}
-                  // id="outlined-basic"
-                  // variant="outlined"
+                  error={Boolean(errors?.email)}
+                  helperText={errors?.email}
                 />
-                {/* <input type="email" placeholder="Email" /> <br /> */}
-                {/* <br /> */}
-                {/* <input type="password" placeholder="Password" /> <br /> */}
-                <br />
-                <br />
                 <TextField
-                  // id="outlined-basic"
                   label="Password"
-                  // variant="outlined"
                   size="small"
+                  variant="filled"
                   fullWidth
                   name="password"
                   value={adminLoginData.password}
                   onChange={handleOnchangeLogin}
+                  type="password"
+                  error={Boolean(errors?.password)}
+                  helperText={errors?.password}
                 />
               </div>
 
               <div className="Login_Remember">
-                <div>
-                  <input type="checkbox" /> <span>Remember Me</span>
-                </div>
-                <div>
-                  <span
-                    className="Register_Forgot"
-                    onClick={handleForgotPassword}
-                  >
-                    Forgot password?
-                  </span>
-                </div>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Typography
+                  onClick={handleForgotPassword}
+                  variant="text"
+                  sx={{ "&:hover": { cursor: "pointer", color: "#1769aa" } }}
+                >
+                  Forgot password ?
+                </Typography>
               </div>
-              <button type="submit" className="Login_btn" onClick={handleLogin}>
-                Login
-              </button>
+              <Button
+                sx={{ marginTop: "10px" }}
+                variant="contained"
+                type="submit"
+                onClick={handleLogin}
+              >
+                Login{" "}
+              </Button>
               <p>
                 Don't have an Account?{" "}
                 <span className="Register_Forgot" onClick={handleRegister}>

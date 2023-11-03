@@ -49,7 +49,6 @@ const Customer = () => {
       };
     });
     setCustomerEntry(data);
-    console.log(data);
   };
 
   const hanldeEditCustomerEntry = (rowData) => {

@@ -26,7 +26,6 @@ const ResetPwd = () => {
     const auth = getAuth();
 
     const user = auth.currentUser;
-    console.log(user);
 
     updatePassword(user, adminResetData.newPwd)
       .then(() => {
